@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+message UUID {
+    string value = 1;
+}
+
+message Volume {
+    UUID ID = 1;
+    int64 size = 2;
+}
+
+message Response {
+    enum RequestStatus {
+        SUCCESSFUL = 0;
+        FAILED = 1;
+    }
+
+    RequestStatus status = 1;
+}
+
+message VolumeList {
+    repeated Volume volumes = 1;
+}
+
+service Storage {
+    rpc Create(Volume) returns (Response) {}
+    rpc Remove(UUID) returns (Response) {}
+    rpc List(google.protobuf.Empty) returns (VolumeList) {}
+}
+
