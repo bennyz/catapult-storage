@@ -1,4 +1,5 @@
 syntax = "proto3";
+package storage;
 
 import "google/protobuf/empty.proto";
 
@@ -7,17 +8,17 @@ message UUID {
 }
 
 message Volume {
-    UUID ID = 1;
-    int64 size = 2;
+    string UUID = 1;
+    int32 size = 2;
 }
 
 message Response {
-    enum RequestStatus {
-        SUCCESSFUL = 0;
-        FAILED = 1;
+    enum Status {
+    	SUCCESS = 0;
+	FAIL = 1;
     }
 
-    RequestStatus status = 1;
+    Status status = 1;
 }
 
 message VolumeList {

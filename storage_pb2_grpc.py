@@ -16,17 +16,17 @@ class StorageStub(object):
       channel: A grpc.Channel.
     """
     self.Create = channel.unary_unary(
-        '/Storage/Create',
+        '/storage.Storage/Create',
         request_serializer=storage__pb2.Volume.SerializeToString,
         response_deserializer=storage__pb2.Response.FromString,
         )
     self.Remove = channel.unary_unary(
-        '/Storage/Remove',
+        '/storage.Storage/Remove',
         request_serializer=storage__pb2.UUID.SerializeToString,
         response_deserializer=storage__pb2.Response.FromString,
         )
     self.List = channel.unary_unary(
-        '/Storage/List',
+        '/storage.Storage/List',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
         response_deserializer=storage__pb2.VolumeList.FromString,
         )
@@ -77,5 +77,5 @@ def add_StorageServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'Storage', rpc_method_handlers)
+      'storage.Storage', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

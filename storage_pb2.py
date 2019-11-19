@@ -18,47 +18,47 @@ from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='storage.proto',
-  package='',
+  package='storage',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rstorage.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x15\n\x04UUID\x12\r\n\x05value\x18\x01 \x01(\t\")\n\x06Volume\x12\x11\n\x02ID\x18\x01 \x01(\x0b\x32\x05.UUID\x12\x0c\n\x04size\x18\x02 \x01(\x03\"`\n\x08Response\x12\'\n\x06status\x18\x01 \x01(\x0e\x32\x17.Response.RequestStatus\"+\n\rRequestStatus\x12\x0e\n\nSUCCESSFUL\x10\x00\x12\n\n\x06\x46\x41ILED\x10\x01\"&\n\nVolumeList\x12\x18\n\x07volumes\x18\x01 \x03(\x0b\x32\x07.Volume2v\n\x07Storage\x12\x1e\n\x06\x43reate\x12\x07.Volume\x1a\t.Response\"\x00\x12\x1c\n\x06Remove\x12\x05.UUID\x1a\t.Response\"\x00\x12-\n\x04List\x12\x16.google.protobuf.Empty\x1a\x0b.VolumeList\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\rstorage.proto\x12\x07storage\x1a\x1bgoogle/protobuf/empty.proto\"\x15\n\x04UUID\x12\r\n\x05value\x18\x01 \x01(\t\"$\n\x06Volume\x12\x0c\n\x04UUID\x18\x01 \x01(\t\x12\x0c\n\x04size\x18\x02 \x01(\x05\"U\n\x08Response\x12(\n\x06status\x18\x01 \x01(\x0e\x32\x18.storage.Response.Status\"\x1f\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\".\n\nVolumeList\x12 \n\x07volumes\x18\x01 \x03(\x0b\x32\x0f.storage.Volume2\x9e\x01\n\x07Storage\x12.\n\x06\x43reate\x12\x0f.storage.Volume\x1a\x11.storage.Response\"\x00\x12,\n\x06Remove\x12\r.storage.UUID\x1a\x11.storage.Response\"\x00\x12\x35\n\x04List\x12\x16.google.protobuf.Empty\x1a\x13.storage.VolumeList\"\x00\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
 
 
-_RESPONSE_REQUESTSTATUS = _descriptor.EnumDescriptor(
-  name='RequestStatus',
-  full_name='Response.RequestStatus',
+_RESPONSE_STATUS = _descriptor.EnumDescriptor(
+  name='Status',
+  full_name='storage.Response.Status',
   filename=None,
   file=DESCRIPTOR,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='SUCCESSFUL', index=0, number=0,
+      name='SUCCESS', index=0, number=0,
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='FAILED', index=1, number=1,
+      name='FAIL', index=1, number=1,
       serialized_options=None,
       type=None),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=165,
-  serialized_end=208,
+  serialized_start=170,
+  serialized_end=201,
 )
-_sym_db.RegisterEnumDescriptor(_RESPONSE_REQUESTSTATUS)
+_sym_db.RegisterEnumDescriptor(_RESPONSE_STATUS)
 
 
 _UUID = _descriptor.Descriptor(
   name='UUID',
-  full_name='UUID',
+  full_name='storage.UUID',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='UUID.value', index=0,
+      name='value', full_name='storage.UUID.value', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -76,28 +76,28 @@ _UUID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=46,
-  serialized_end=67,
+  serialized_start=55,
+  serialized_end=76,
 )
 
 
 _VOLUME = _descriptor.Descriptor(
   name='Volume',
-  full_name='Volume',
+  full_name='storage.Volume',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='ID', full_name='Volume.ID', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='UUID', full_name='storage.Volume.UUID', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='size', full_name='Volume.size', index=1,
-      number=2, type=3, cpp_type=2, label=1,
+      name='size', full_name='storage.Volume.size', index=1,
+      number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -114,20 +114,20 @@ _VOLUME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=69,
-  serialized_end=110,
+  serialized_start=78,
+  serialized_end=114,
 )
 
 
 _RESPONSE = _descriptor.Descriptor(
   name='Response',
-  full_name='Response',
+  full_name='storage.Response',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='status', full_name='Response.status', index=0,
+      name='status', full_name='storage.Response.status', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -138,7 +138,7 @@ _RESPONSE = _descriptor.Descriptor(
   ],
   nested_types=[],
   enum_types=[
-    _RESPONSE_REQUESTSTATUS,
+    _RESPONSE_STATUS,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -146,20 +146,20 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=112,
-  serialized_end=208,
+  serialized_start=116,
+  serialized_end=201,
 )
 
 
 _VOLUMELIST = _descriptor.Descriptor(
   name='VolumeList',
-  full_name='VolumeList',
+  full_name='storage.VolumeList',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='volumes', full_name='VolumeList.volumes', index=0,
+      name='volumes', full_name='storage.VolumeList.volumes', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -177,13 +177,12 @@ _VOLUMELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=210,
-  serialized_end=248,
+  serialized_start=203,
+  serialized_end=249,
 )
 
-_VOLUME.fields_by_name['ID'].message_type = _UUID
-_RESPONSE.fields_by_name['status'].enum_type = _RESPONSE_REQUESTSTATUS
-_RESPONSE_REQUESTSTATUS.containing_type = _RESPONSE
+_RESPONSE.fields_by_name['status'].enum_type = _RESPONSE_STATUS
+_RESPONSE_STATUS.containing_type = _RESPONSE
 _VOLUMELIST.fields_by_name['volumes'].message_type = _VOLUME
 DESCRIPTOR.message_types_by_name['UUID'] = _UUID
 DESCRIPTOR.message_types_by_name['Volume'] = _VOLUME
@@ -194,28 +193,28 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 UUID = _reflection.GeneratedProtocolMessageType('UUID', (_message.Message,), {
   'DESCRIPTOR' : _UUID,
   '__module__' : 'storage_pb2'
-  # @@protoc_insertion_point(class_scope:UUID)
+  # @@protoc_insertion_point(class_scope:storage.UUID)
   })
 _sym_db.RegisterMessage(UUID)
 
 Volume = _reflection.GeneratedProtocolMessageType('Volume', (_message.Message,), {
   'DESCRIPTOR' : _VOLUME,
   '__module__' : 'storage_pb2'
-  # @@protoc_insertion_point(class_scope:Volume)
+  # @@protoc_insertion_point(class_scope:storage.Volume)
   })
 _sym_db.RegisterMessage(Volume)
 
 Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Message,), {
   'DESCRIPTOR' : _RESPONSE,
   '__module__' : 'storage_pb2'
-  # @@protoc_insertion_point(class_scope:Response)
+  # @@protoc_insertion_point(class_scope:storage.Response)
   })
 _sym_db.RegisterMessage(Response)
 
 VolumeList = _reflection.GeneratedProtocolMessageType('VolumeList', (_message.Message,), {
   'DESCRIPTOR' : _VOLUMELIST,
   '__module__' : 'storage_pb2'
-  # @@protoc_insertion_point(class_scope:VolumeList)
+  # @@protoc_insertion_point(class_scope:storage.VolumeList)
   })
 _sym_db.RegisterMessage(VolumeList)
 
@@ -223,16 +222,16 @@ _sym_db.RegisterMessage(VolumeList)
 
 _STORAGE = _descriptor.ServiceDescriptor(
   name='Storage',
-  full_name='Storage',
+  full_name='storage.Storage',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=250,
-  serialized_end=368,
+  serialized_start=252,
+  serialized_end=410,
   methods=[
   _descriptor.MethodDescriptor(
     name='Create',
-    full_name='Storage.Create',
+    full_name='storage.Storage.Create',
     index=0,
     containing_service=None,
     input_type=_VOLUME,
@@ -241,7 +240,7 @@ _STORAGE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='Remove',
-    full_name='Storage.Remove',
+    full_name='storage.Storage.Remove',
     index=1,
     containing_service=None,
     input_type=_UUID,
@@ -250,7 +249,7 @@ _STORAGE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='List',
-    full_name='Storage.List',
+    full_name='storage.Storage.List',
     index=2,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
