@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='storage',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rstorage.proto\x12\x07storage\x1a\x1bgoogle/protobuf/empty.proto\"\x15\n\x04UUID\x12\r\n\x05value\x18\x01 \x01(\t\"$\n\x06Volume\x12\x0c\n\x04UUID\x18\x01 \x01(\t\x12\x0c\n\x04size\x18\x02 \x01(\x05\"U\n\x08Response\x12(\n\x06status\x18\x01 \x01(\x0e\x32\x18.storage.Response.Status\"\x1f\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\".\n\nVolumeList\x12 \n\x07volumes\x18\x01 \x03(\x0b\x32\x0f.storage.Volume2\x9e\x01\n\x07Storage\x12.\n\x06\x43reate\x12\x0f.storage.Volume\x1a\x11.storage.Response\"\x00\x12,\n\x06Remove\x12\r.storage.UUID\x1a\x11.storage.Response\"\x00\x12\x35\n\x04List\x12\x16.google.protobuf.Empty\x1a\x13.storage.VolumeList\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\rstorage.proto\x12\x07storage\x1a\x1bgoogle/protobuf/empty.proto\"\x15\n\x04UUID\x12\r\n\x05value\x18\x01 \x01(\t\"$\n\x06Volume\x12\x0c\n\x04UUID\x18\x01 \x01(\t\x12\x0c\n\x04size\x18\x02 \x01(\x03\"U\n\x08Response\x12(\n\x06status\x18\x01 \x01(\x0e\x32\x18.storage.Response.Status\"\x1f\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\".\n\nVolumeList\x12 \n\x07volumes\x18\x01 \x03(\x0b\x32\x0f.storage.Volume2\x9e\x01\n\x07Storage\x12.\n\x06\x43reate\x12\x0f.storage.Volume\x1a\x11.storage.Response\"\x00\x12,\n\x06Remove\x12\r.storage.UUID\x1a\x11.storage.Response\"\x00\x12\x35\n\x04List\x12\x16.google.protobuf.Empty\x1a\x13.storage.VolumeList\"\x00\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -97,7 +97,7 @@ _VOLUME = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='size', full_name='storage.Volume.size', index=1,
-      number=2, type=5, cpp_type=1, label=1,
+      number=2, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
