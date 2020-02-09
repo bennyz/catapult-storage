@@ -1,14 +1,26 @@
+#!/bin/env python3
+import eventlet
+eventlet.monkey_patch(thread=False)
 import logging
 import functools
+import os
 import sys
 import cinderlib as cl
-from eventlet import tpool
+import time
+import threading
+import signal
+
 import grpc
 import storage_pb2
-from storage_pb2 import Response
 import storage_pb2_grpc
 
+from storage_pb2 import Response
+from grpc_reflection.v1alpha import reflection
 from concurrent import futures
+from eventlet import tpool
+
+
+SHUTDOWN_EVENT = threading.Event()
 
 cl.setup(disable_logs=False)
 ceph = cl.Backend(
@@ -23,6 +35,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 log = logging.getLogger(__name__)
 log.info("Finished setting cinderlib backend...")
 
+eventlet.monkey_patch(thread=False)
 class ServerProxy(tpool.Proxy):
     @staticmethod
     def _my_doit(method, *args, **kwargs):
@@ -66,20 +79,71 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         self.log.info("List")
         return storage_pb2.Response.Status.SUCCESS
 
+def shutdown_handler(signum, stack):
+    signal_name = 'SIGTERM' if signum == signal.SIGTERM else 'SIGINT'
+    SHUTDOWN_EVENT.set()
+
+
+def stop_server(server):
+    def force_stop():
+        log.error('Failed to stop process, killing ourselves')
+        os.kill(os.getpid(), signal.SIGKILL)
+
+    log.info('Gracefully stopping server')
+    shutdown_hadler = server.stop(60 * 10)
+    shutdown_hadler.wait()
+
+    threading.Thread(target=force_stop).start()
+
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    options = (
+        # allow keepalive pings when there's no gRPC calls
+        ('grpc.keepalive_permit_without_calls', True),
+        # allow unlimited amount of keepalive pings without data
+        ('grpc.http2.max_pings_without_data', 0),
+        # allow grpc pings from client every 1 seconds
+        ('grpc.http2.min_time_between_pings_ms', 1000),
+        # allow grpc pings from client without data every 1 seconds
+        ('grpc.http2.min_ping_interval_without_data_ms',  1000),
+        # Support unlimited misbehaving pings
+        ('grpc.http2.max_ping_strikes', 0),
+    )
+
+    signal.signal(signal.SIGTERM, shutdown_handler)
+    signal.signal(signal.SIGINT, shutdown_handler)
+
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=options)
+    storage_pb2_grpc.add_StorageServicer_to_server(
+            StorageServicer(log),
+            server)
+
+    SERVICE_NAMES = [
+        storage_pb2.DESCRIPTOR.services_by_name['Storage'].full_name,
+        reflection.SERVICE_NAME,
+    ]
 
     # grpc/eventlet hack taken from https://github.com/embercsi/ember-csi/blob/5bd4dffe9107bc906d14a45cd819d9a659c19047/ember_csi/ember_csi.py#L1106-L1111
     state = server._state
     state.server = ServerProxy(state.server)
     state.completion_queue = tpool.Proxy(state.completion_queue)
-    storage_pb2_grpc.add_StorageServicer_to_server(
-            StorageServicer(log),
-            server)
+    eventlet.monkey_patch(thread=False)
+
+
+    reflection.enable_server_reflection(SERVICE_NAMES, server)
     server.add_insecure_port('[::]:50051')
     server.start()
-    server.wait_for_termination()
+    # TODO make configurable, don't hard-code
+    log.info("Server started on %d...", 50051)
+    #server.wait_for_termination()
+    try:
+        while True:
+            time.sleep(60 * 60 * 24)
+    except KeyboardInterrupt:
+        server.stop(0)
+
+    SHUTDOWN_EVENT.wait()
+    stop_server(server)
 
 if __name__ == '__main__':
     log.info("Starting server...")

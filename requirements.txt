@@ -136,3 +136,5 @@ WebOb==1.8.5
 wrapt==1.11.2
 yappi==1.0
 zipp==0.6.0
+grpcio-tools
+grpcio-reflection
